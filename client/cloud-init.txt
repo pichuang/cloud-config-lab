@@ -1,6 +1,11 @@
 #cloud-config
-package_update: false
-package_upgrade: false
+
+# Correct
+#package_update: false
+#package_upgrade: false
+# Incorrect
+repo_update: false
+repo_upgrade: falsae
 
 write_files:
 - path: /tmp/record-setup.sh
