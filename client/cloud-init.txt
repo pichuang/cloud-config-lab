@@ -1,0 +1,29 @@
+#cloud-config
+package_update: false
+package_upgrade: false
+
+write_files:
+- path: /tmp/record-setup.sh
+  permissions: '0755'
+  content: |
+    #!/bin/bash
+    echo "=== record-setup.sh ==="
+    date
+    echo "=== record-setup.sh completed ==="
+
+bootcmd:
+  - echo "=== bootcmd ===" >> /var/log/time.txt
+  - date >> /var/log/time.txt
+  - logger "Hellow bootcmd"
+  - echo "=== bootcmd completed ===" >> /var/log/time.txt
+runcmd:
+  - echo "=== runcmd ===" >> /var/log/time.txt
+  - date >> /var/log/time.txt
+  - logger "Hello runcmd"
+  - echo "=== runcmd completed ===" >> /var/log/time.txt
+  - [ sh, /tmp/record-setup.sh ]
+
+rsyslog:
+  remotes:
+      rsyslog: "*.* @70.157.24.53:514"
+  service_reload_command: auto
